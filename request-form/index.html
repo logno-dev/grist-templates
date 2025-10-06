@@ -51,8 +51,10 @@
 
     data.innerText = ''
 
-    grist.onRecord((record) => {
-      data.innerHtml += `<li>${record.sampleId}</li>`
+    grist.onRecords((records) => {
+      records.forEach((record) => {
+        data.innerHtml += `<li>${record.sampleId}</li>`
+      })
     })
     // Register onOptions handler.
     grist.onOptions((customOptions, interactionOptions) => {
