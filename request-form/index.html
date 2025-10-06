@@ -28,29 +28,32 @@
           <td><input type="text" id="setOption2"></td>
         </tr>
       </table>
+      <ul id="data">
+
+      </ul>
       <button onclick="saveOptions()">Save</input>
     </div>
   </div>
-  Custom options:
-  <pre id="customLog">Waiting for data ...</pre>
-  Interaction options:
-  <pre id="interactionLog">Waiting for data ...</pre>
   <script>
     // Register global error handler.
     window.onerror = (message) => alert(String(message));
     // Tell Grist we are ready.
     grist.ready({
-      // Register configuration handler to show configuration panel.
+      columns: ['sampleId'],
       onEditOptions() {
         showPanel('configuration');
       },
       // Inform about required access level.
       requiredAccess: 'read table'
     });
+
+    data.innerText = ''
+
+    grist.onRecord((record) => {
+      data.innerHtml += `<li>${record.sampleId}</li>`
+    })
     // Register onOptions handler.
     grist.onOptions((customOptions, interactionOptions) => {
-      document.getElementById("customLog").innerText = JSON.stringify(customOptions, null, -2);
-      document.getElementById("interactionLog").innerText = JSON.stringify(interactionOptions, null, -2);
       showPanel(customOptions ? 'main' : 'error');
       customOptions = customOptions || {};
       document.getElementById("setOption1").value = customOptions.option1 || '';
