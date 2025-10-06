@@ -53,9 +53,10 @@
     dataList.innerHTML = '';
 
     grist.onRecords((records) => {
+      const mapped = grist.mapColumnNames(records)
       dataList.innerHTML = '';
-      records.forEach((record) => {
-        dataList.innerHTML += `<li>${record.Sample_ID}</li>`
+      mapped.forEach((record) => {
+        dataList.innerHTML += `<li>${record.sampleId}</li>`
       })
     })
     // Register onOptions handler.
