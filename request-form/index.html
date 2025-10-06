@@ -49,11 +49,13 @@
       requiredAccess: 'read table'
     });
 
-    data.innerText = ''
+    const dataList = document.getElementById("data");
+    dataList.innerHTML = '';
 
     grist.onRecords((records) => {
+      dataList.innerHTML = '';
       records.forEach((record) => {
-        data.innerHtml += `<li>${record.sampleId}</li>`
+        dataList.innerHTML += `<li>${record.sampleId}</li>`
       })
     })
     // Register onOptions handler.
