@@ -18,7 +18,7 @@
     window.onerror = (message) => alert(String(message));
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['sampleId, testMethod, price, lab, address, poNum, date, newClient, '],
+      columns: ['sampleId', 'testMethod', 'price', 'lab', 'address', 'poNum', 'date', 'newClient'],
       // Inform about required access level.
       requiredAccess: 'read table'
     });
