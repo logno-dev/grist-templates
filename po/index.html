@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grist Custom Widget</title>
+  <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+</head>
+
+<body>
+  <div id="app" style="display: none;">
+    <div id="po"></div>
+    <ul id="data"></ul>
+  </div>
+  <script>
+    // Register global error handler.
+    window.onerror = (message) => alert(String(message));
+    // Tell Grist we are ready.
+    grist.ready({
+      columns: ['sampleId, testMethod, price, lab, address, poNum, date, newClient, '],
+      // Inform about required access level.
+      requiredAccess: 'read table'
+    });
+
+    const dataList = document.getElementById("data");
+    const po = document.getElementById("po");
+
+    grist.onRecords((records) => {
+      const mapped = grist.mapColumnNames(records)
+      mapped.forEach((record) => {
+        dataList.innerHTML += `<li>${record.sampleId}</li>`
+        po.innerHTML = `${record.lab}, ${record.poNum}<br>`
+      })
+    })
+  </script>
+</body>
+
+</html>
