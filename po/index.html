@@ -27,9 +27,13 @@
 
     grist.onRecords((records) => {
       const mapped = grist.mapColumnNames(records)
+      po.innerHTML = ''
       mapped.forEach((record) => {
-        // dataList.innerHTML += `<li>${record.sampleId}</li>`
-        po.innerHTML += `${JSON.stringify(record)}<br>`
+        po.innerHTML = `${record.poNum} ${record.lab} ${record.address}`
+        record.items.json().forEach((item) => {
+          data.innerHTML += `<li>${item.sampleId} - ${item.testMethod} - ${item.testMethodPrice}`
+        })
+
       })
     })
   </script>
