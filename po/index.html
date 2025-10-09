@@ -29,7 +29,7 @@
       const mapped = grist.mapColumnNames(records)
       mapped.forEach((record) => {
         // dataList.innerHTML += `<li>${record.sampleId}</li>`
-        po.innerHTML = `${JSON.stringify(record)}<br>`
+        po.innerHTML += `${JSON.stringify(record)}<br>`
       })
     })
   </script>
