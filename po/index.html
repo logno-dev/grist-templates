@@ -58,15 +58,12 @@
     const po = document.getElementById("po");
 
     grist.onRecord((d) => {
-      const mapped = grist.mapColumnNames(d)
       po.innerHTML = ''
       data.innerHTML = ''
-      mapped.forEach((record) => {
-        po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
-        record.items.forEach((item) => {
-          data.innerHTML += `<tr><td>${item.sampleId}</td><td>${item.testMethod}</td><td>${item.testMethodPrice}</td><td>${item.new}</td></tr>`
-        })
-
+      const record = grist.mapColumnNames(d)
+      po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
+      record.items.forEach((item) => {
+        data.innerHTML += `<tr><td>${item.sampleId}</td><td>${item.testMethod}</td><td>${item.testMethodPrice}</td><td>${item.new}</td></tr>`
       })
     })
   </script>
