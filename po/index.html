@@ -15,7 +15,6 @@
   </div>
   <script>
     // Register global error handler.
-    window.onerror = (message) => alert(String(message));
     // Tell Grist we are ready.
     grist.ready({
       columns: ['sampleId', 'testMethod', 'price', 'lab', 'address', 'poNum', 'date', 'newClient'],
@@ -29,8 +28,8 @@
     grist.onRecords((records) => {
       const mapped = grist.mapColumnNames(records)
       mapped.forEach((record) => {
-        dataList.innerHTML += `<li>${record.sampleId}</li>`
-        po.innerHTML = `${record.lab}, ${record.poNum}<br>`
+        // dataList.innerHTML += `<li>${record.sampleId}</li>`
+        po.innerHTML = `${JSON.stringify(record)}<br>`
       })
     })
   </script>
