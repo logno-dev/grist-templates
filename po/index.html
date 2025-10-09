@@ -11,13 +11,21 @@
 <body>
   <div id="app">
     <div id="po"></div>
-    <ul id="data"></ul>
+    <table>
+      <thead>
+        <th>Sample Id</th>
+        <th>Test</th>
+        <th>Price</th>
+        <th>New Client</th>
+      </thead>
+      <tbody id="data"></tbody>
+    </table>
   </div>
   <script>
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['poNum', 'lab', 'address', 'items'],
+      columns: ['poNum', 'lab', 'address', 'items', 'prep'],
       // Inform about required access level.
       requiredAccess: 'read table'
     });
@@ -28,10 +36,11 @@
     grist.onRecords((records) => {
       const mapped = grist.mapColumnNames(records)
       po.innerHTML = ''
+      data.innerHTML = ''
       mapped.forEach((record) => {
-        po.innerHTML = `${record.poNum} ${record.lab} ${record.address}`
+        po.innerHTML = `<strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
         record.items.forEach((item) => {
-          data.innerHTML += `<li>${item.sampleId} - ${item.testMethod} - ${item.testMethodPrice}`
+          data.innerHTML += `<tr><td>${item.sampleId}</td><td>${item.testMethod}</td><td>${item.testMethodPrice}</td><td>${item.new}</td></tr>`
         })
 
       })
