@@ -30,7 +30,7 @@
       po.innerHTML = ''
       mapped.forEach((record) => {
         po.innerHTML = `${record.poNum} ${record.lab} ${record.address}`
-        record.items.json().forEach((item) => {
+        record.items.forEach((item) => {
           data.innerHTML += `<li>${item.sampleId} - ${item.testMethod} - ${item.testMethodPrice}`
         })
 
