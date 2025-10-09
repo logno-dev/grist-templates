@@ -6,6 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grist Custom Widget</title>
   <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+  <style>
+    #app {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem;
+    }
+
+    table: {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      padding: .3rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -25,7 +43,7 @@
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['poNum', 'lab', 'address', 'items', 'prep'],
+      columns: ['date', 'poNum', 'lab', 'address', 'items', 'prep'],
       // Inform about required access level.
       requiredAccess: 'read table'
     });
@@ -38,7 +56,7 @@
       po.innerHTML = ''
       data.innerHTML = ''
       mapped.forEach((record) => {
-        po.innerHTML = `<strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
+        po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
         record.items.forEach((item) => {
           data.innerHTML += `<tr><td>${item.sampleId}</td><td>${item.testMethod}</td><td>${item.testMethodPrice}</td><td>${item.new}</td></tr>`
         })
