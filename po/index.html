@@ -38,7 +38,8 @@
     }
 
     th,
-    .total {
+    .total,
+    .total strong {
       background-color: #f0f0f0;
     }
 
@@ -140,12 +141,12 @@
 
       po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
 
-      note.innerHMTL = `<p>${record.note}</p>`
+      note.innerHMTL = `<p><strong>Notes:</strong><br>${record.note}</p>`
 
       record.items.forEach((item) => {
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.new ? "yes" : ""}</td><td>${item.testMethodPrice}</td></tr>`
       })
-      data.innerHTML += `<tr><td colspan="3" class="total"><strong>TOTAL:</strong</td><td>${record.total}</td></tr>`
+      data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${record.total}</td></tr>`
     })
   </script>
 </body>
