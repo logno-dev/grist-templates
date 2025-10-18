@@ -174,9 +174,10 @@
       note.innerHTML = ''
       status.innerHTML = ''
 
-      status.className = record.status.toString()
 
       const record = grist.mapColumnNames(d)
+
+      status.className = record.status.toString()
 
       po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
 
