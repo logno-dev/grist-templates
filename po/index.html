@@ -146,7 +146,7 @@
       note.innerHTML = `<p><strong>Notes:</strong><br>${record.note}</p>`
 
       record.items.forEach((item) => {
-        data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.new ? "yes" : ""}</td><td>${item.testMethodPrice}</td></tr>`
+        data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
       })
       data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${record.total}</td></tr>`
     })
