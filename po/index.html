@@ -158,7 +158,6 @@
     }
 
     function statusOutput(status) {
-      status.className = status
       switch (status) {
         case "pending":
           return "Approval for this PO is pending";
@@ -181,7 +180,7 @@
 
       note.innerHTML = `<p><strong>Notes:</strong><br>${record.note}</p>`
 
-      status.innerHTML = `<strong>Status:</strong><br><p>${statusOutput(record.status)}</p>`
+      status.innerHTML = `<div class="${record.status}><strong>Status:</strong><br><p>${statusOutput(record.status)}</p></div>`
 
       record.items.forEach((item) => {
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
