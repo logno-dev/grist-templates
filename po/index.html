@@ -174,13 +174,15 @@
       note.innerHTML = ''
       status.innerHTML = ''
 
+      status.className = record.status.toString()
+
       const record = grist.mapColumnNames(d)
 
       po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
 
       note.innerHTML = `<p><strong>Notes:</strong><br>${record.note}</p>`
 
-      status.innerHTML = `<div class="${record.status}"><strong>Status:</strong><br><p>${statusOutput(record.status)}</p></div>`
+      status.innerHTML = `<strong>Status:</strong><br><p>${statusOutput(record.status)}</p>`
 
       record.items.forEach((item) => {
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
