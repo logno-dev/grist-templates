@@ -86,6 +86,27 @@
     #note p {
       text-align: center;
     }
+
+    #status {
+      padding: 1rem;
+      text-align: center;
+      border-radius: 6px;
+    }
+
+    .pending {
+      background-color: #f4f4f4;
+      color: black;
+    }
+
+    .approved {
+      background-color: #1f7012;
+      color: white;
+    }
+
+    .altered {
+      background-color: #bd7800;
+      color: white;
+    }
   </style>
 </head>
 
@@ -94,6 +115,7 @@
     <div class="flex">
       <div id="po"></div>
       <div id="note"></div>
+      <div id="status"></div>
     </div>
     <table>
       <thead>
@@ -110,7 +132,7 @@
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total'],
+      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved'],
       // Inform about required access level.
       requiredAccess: 'read table'
     });
@@ -118,6 +140,7 @@
     const dataList = document.getElementById("data");
     const po = document.getElementById("po");
     const note = document.getElementById("note")
+    const status = document.getElementById("status")
 
     function copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(() => {
@@ -134,16 +157,31 @@
       });
     }
 
+    function statusOutput(status) {
+      status.className = status
+      switch (status) {
+        case "pending":
+          return "Approval for this PO is pending";
+        case "approved":
+          return `This PO is<br><strong>APPROVED</strong>`;
+        case "altered":
+          return "This PO has been altered after approval and needs further review";
+      }
+    }
+
     grist.onRecord((d) => {
       po.innerHTML = ''
       data.innerHTML = ''
       note.innerHTML = ''
+      status.innerHTML = ''
 
       const record = grist.mapColumnNames(d)
 
       po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
 
       note.innerHTML = `<p><strong>Notes:</strong><br>${record.note}</p>`
+
+      status.innerHTML = `<strong>Status:</strong><br><p>${statusOutput(record.status)}</p>`
 
       record.items.forEach((item) => {
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
