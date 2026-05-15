@@ -135,7 +135,7 @@
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved'],
+      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved', 'susFee', 'shipFee'],
       // Inform about required access level.
       requiredAccess: 'read table'
     });
@@ -184,6 +184,10 @@
 
       status.className = String(record.status)
 
+      const sampleIdList = record.items.map(item)=> item.SampleId
+      const totalUniqueSamples = new Set(sampleIdList).size
+      const totalSusFee = totalUniqueSamples * record.susFee
+
       po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
 
       note.innerHTML = `<p><strong>Notes:</strong><br>${record.note}</p>`
@@ -193,7 +197,11 @@
       record.items.forEach((item) => {
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
       })
-      data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${record.total}</td></tr>`
+
+        (record.susFee && data.innerHTML += `<tr><td colspan="4">Sustainability Fee x ${totalUniqueSamples}</td><td>${totalSusFee}</td></tr>`)
+        (record.shipFee && data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${record.shipFee}</td></tr>`)
+      data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${(record.total + record.shipFee + totalSusFee)toFixed(2)
+    }</td ></tr >`
     })
   </script>
 </body>
