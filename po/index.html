@@ -137,7 +137,8 @@
     grist.ready({
       columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved', 'susFee', 'shipFee'],
       // Inform about required access level.
-      requiredAccess: 'read table'
+      requiredAccess: 'read table',
+      allowSelectBy: true
     });
 
     const dataList = document.getElementById("data");
