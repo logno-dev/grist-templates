@@ -178,7 +178,6 @@
       note.innerHTML = ''
       status.innerHTML = ''
 
-      console.log(d)
 
 
       const record = grist.mapColumnNames(d)
@@ -188,6 +187,10 @@
       const sampleIdList = record.items.map((item) => item.SampleId)
       const totalUniqueSamples = new Set(sampleIdList).size
       const totalSusFee = totalUniqueSamples * record.susFee
+
+      console.log(sampleIdList)
+      console.log(totalUniqueSamples)
+      console.log(totalSusFee)
 
       po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
 
