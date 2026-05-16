@@ -184,7 +184,7 @@
 
       status.className = String(record.status)
 
-      const sampleIdList = record.items.map((item) => item.SampleId)
+      const sampleIdList = record.items.map((item) => item.sampleId)
       const totalUniqueSamples = new Set(sampleIdList).size
       const totalSusFee = totalUniqueSamples * record.susFee
 
