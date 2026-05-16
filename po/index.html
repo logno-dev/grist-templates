@@ -199,8 +199,8 @@
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
       })
 
-        (record.susFee ? {data.innerHTML += `<tr><td colspan="4">Sustainability Fee x ${totalUniqueSamples}</td><td>${totalSusFee}</td></tr>`} : null)
-        (record.shipFee ? {data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${record.shipFee}</td></tr>`} : null)
+        (record.susFee ? data.innerHTML += `<tr><td colspan="4">Sustainability Fee x ${totalUniqueSamples}</td><td>${totalSusFee}</td></tr>` : null)
+        (record.shipFee ? data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${record.shipFee}</td></tr>` : null)
       data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${(record.total + record.shipFee + totalSusFee)toFixed(2)
     }</td ></tr >`
     })
