@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grist Custom Widget</title>
+  <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+  <style>
+    :root,
+    html,
+    * {
+      padding: 0;
+      margin: 0;
+      background-color: white;
+      color: black;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem;
+    }
+
+    .page {
+      break-after: page;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="label"></div>
+  </div>
+  <script>
+    // Register global error handler.
+    // Tell Grist we are ready.
+    grist.ready({
+      columns: ['date', 'lab', 'sampleId'],
+      // Inform about required access level.
+      requiredAccess: 'read table',
+      allowSelectBy: true
+    });
+
+    const labelList = document.getElementById("label");
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        console.log('Copied to clipboard:', text);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      });
+    }
+
+    grist.onRecord((d) => {
+
+      labelList.innerHTML = ""
+
+      const records = grist.mapColumnNames(d)
+
+      records.forEach((record) => {
+        labelList.innerHTML += `<div class="page">${record.date}<br>${record.sampleId}<br>${record.lab}</div>`
+      })
+
+    }
+  </script>
+</body>
+
+</html>
