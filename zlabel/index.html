@@ -23,6 +23,19 @@
       padding: 1rem;
     }
 
+    .date {
+      font-size: 0.8em;
+    }
+
+    .sample {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .lab {
+      font-size: 0.7em;
+    }
+
     .page {
       break-after: page;
     }
@@ -67,7 +80,7 @@
       const record = grist.mapColumnNames(d)
 
       record.items.forEach((item) => {
-        labelList.innerHTML += `<div class="page">${record.date}<br>${item.sampleId}<br>${record.lab}</div>`
+        labelList.innerHTML += `<div class="page"><span class="date">${record.date}</span><br><span class="sample">${item.sampleId}</span><br><span class="lab">${record.lab}</span></div>`
       })
 
     })
