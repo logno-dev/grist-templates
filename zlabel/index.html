@@ -37,7 +37,7 @@
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['date', 'lab', 'sampleId'],
+      columns: ['date', 'lab', 'items'],
       // Inform about required access level.
       requiredAccess: 'read table',
       allowSelectBy: true
@@ -64,10 +64,10 @@
 
       labelList.innerHTML = ""
 
-      const records = grist.mapColumnNames(d)
+      const record = grist.mapColumnNames(d)
 
-      records.forEach((record) => {
-        labelList.innerHTML += `<div class="page">${record.date}<br>${record.sampleId}<br>${record.lab}</div>`
+      record.items.forEach((item) => {
+        labelList.innerHTML += `<div class="page">${record.date}<br>${item.sampleId}<br>${record.lab}</div>`
       })
 
     })
