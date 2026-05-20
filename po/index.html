@@ -135,7 +135,7 @@
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved', 'susFee', 'shipFee'],
+      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved', 'susFee', 'shipFee', 'shipCost', 'tracking'],
       // Inform about required access level.
       requiredAccess: 'read table',
       allowSelectBy: true
@@ -145,6 +145,7 @@
     const po = document.getElementById("po");
     const note = document.getElementById("note")
     const status = document.getElementById("status")
+    const tracking = document.getElementById("tracking")
 
     function copyToClipboard(text) {
       navigator.clipboard.writeText(text).then(() => {
@@ -188,15 +189,18 @@
       const totalUniqueSamples = new Set(sampleIdList).size
       const totalSusFee = totalUniqueSamples * record.susFee
 
+      const shipping = record.shipCost ?? record.shipFee ?? null
+
       console.log(sampleIdList)
       console.log(totalUniqueSamples)
       console.log(totalSusFee)
 
-      po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}`
+      po.innerHTML = `<strong>Date:</strong> ${record.date}<br><strong>Lab:</strong> ${record.lab}<br><strong>PO#:</strong> ${record.poNum}<br><strong>Prepared By:</strong> ${record.prep}<br><strong>Tracking#:</strong> ${record.tracking}`
 
       note.innerHTML = `<p><strong>Notes:</strong><br>${record.note}</p>`
 
       status.innerHTML = `<strong>Status:</strong><br><p>${statusOutput(record.status)}</p>`
+
 
       record.items.forEach((item) => {
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
@@ -205,10 +209,10 @@
       if (record.susFee) {
         data.innerHTML += `<tr><td colspan="4">Sustainability Fee x ${totalUniqueSamples} ( @ ${record.susFee} ea)</td><td>${totalSusFee}</td></tr>`
       }
-      if (record.shipFee) {
-        data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${record.shipFee}</td></tr>`
+      if (shipping) {
+        data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${shipping}</td></tr>`
       }
-      data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${Number(record.total + record.shipFee + totalSusFee).toFixed(2)}</td ></tr >`
+      data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${Number(record.total + shipping + totalSusFee).toFixed(2)}</td ></tr >`
     })
   </script>
 </body>
