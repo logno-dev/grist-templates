@@ -212,7 +212,9 @@
       if (record.susFee) {
         data.innerHTML += `<tr><td colspan="4">Sustainability Fee x ${totalUniqueSamples} ( @ ${record.susFee} ea)</td><td>${totalSusFee}</td></tr>`
       }
-      if (shipping) {
+      if (record.shipCost) {
+        data.innerHTML += `<tr><td colspan="4">World Wide Express Shipping Fee</td><td>${shipping}</td></tr>`
+      } else if (record.shipFee) {
         data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${shipping}</td></tr>`
       }
       data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${Number(record.total + shipping + totalSusFee).toFixed(2)}</td ></tr >`
