@@ -135,7 +135,7 @@
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved', 'susFee', 'shipFee', 'shipCost', 'tracking'],
+      columns: ['date', 'poNum', 'lab', 'note', 'items', 'prep', 'total', 'status', 'approved', 'susFee', 'shipFee', 'tracking'],
       // Inform about required access level.
       requiredAccess: 'read table',
       allowSelectBy: true
@@ -188,8 +188,6 @@
       const totalUniqueSamples = new Set(sampleIdList).size
       const totalSusFee = totalUniqueSamples * record.susFee
 
-      const shipping = record.shipCost ?? record.shipFee ?? null
-
       console.log(sampleIdList)
       console.log(totalUniqueSamples)
       console.log(totalSusFee)
@@ -204,7 +202,6 @@
 
       status.innerHTML = `<strong>Status:</strong><br><p>${statusOutput(record.status)}</p>`
 
-
       record.items.forEach((item) => {
         data.innerHTML += `<tr><td id="${item.sampleId}"><div class="sample-id-cell"><span>${item.sampleId}</span><button class="copy-btn" onclick="copyToClipboard('${item.sampleId}')">Copy</button></div></td><td>${item.testMethod}</td><td>${item.rush}</td><td>${item.client}</td><td>${item.testMethodPrice}</td></tr>`
       })
@@ -212,12 +209,12 @@
       if (record.susFee) {
         data.innerHTML += `<tr><td colspan="4">Sustainability Fee x ${totalUniqueSamples} ( @ ${record.susFee} ea)</td><td>${totalSusFee}</td></tr>`
       }
-      if (record.shipCost) {
-        data.innerHTML += `<tr><td colspan="4">World Wide Express Shipping Fee</td><td>${shipping}</td></tr>`
-      } else if (record.shipFee) {
-        data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${shipping}</td></tr>`
+
+      if (record.shipFee) {
+        data.innerHTML += `<tr><td colspan="4">Shipping Fee</td><td>${record.shipFee}</td></tr>`
       }
-      data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${Number(record.total + shipping + totalSusFee).toFixed(2)}</td ></tr >`
+
+      data.innerHTML += `<tr><td colspan="4" class="total"><strong>TOTAL:</strong</td><td>${Number(record.total + record.shipFee + totalSusFee).toFixed(2)}</td ></tr >`
     })
   </script>
 </body>
