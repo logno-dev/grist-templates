@@ -79,7 +79,9 @@
 
       const record = grist.mapColumnNames(d)
 
-      record.items.forEach((item) => {
+      const itemSet = new Set(record.items)
+
+      itemSet.forEach((item) => {
         labelList.innerHTML += `<div class="page"><span class="date">${record.date}</span><br><span class="sample">${item.sampleId}</span><br><span class="lab">${record.lab}</span></div>`
       })
 
