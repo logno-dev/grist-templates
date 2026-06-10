@@ -186,7 +186,7 @@
       const qrcode = document.getElementById("qr");
       qrcode.innerHTML = "";
 
-      const value = "https://foodmicro.app/cs/os-photos/upload?po=" + records.poNum || "";
+      const value = "https://foodmicro.app/cs/os-photos/upload?po=" + record.poNum || "";
 
 
       new QRCode(qrcode, {
