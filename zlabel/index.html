@@ -53,13 +53,14 @@
 
 <body>
   <div id="app">
+    <div class="page" id="qr"></div>
     <div id="label"></div>
   </div>
   <script>
     // Register global error handler.
     // Tell Grist we are ready.
     grist.ready({
-      columns: ['date', 'lab', 'sampleId', 'weight'],
+      columns: ['date', 'lab', 'sampleId', 'weight', 'poNum'],
       // Inform about required access level.
       requiredAccess: 'read table',
       allowSelectBy: true
@@ -87,6 +88,18 @@
       labelList.innerHTML = ""
 
       const records = grist.mapColumnNames(d)
+
+      const qrcode = document.getElementById("qr");
+      qrcode.innerHTML = "";
+
+      const value = "https://foodmicro.app/cs/os-photos/upload?po=" + records[0].poNum || "";
+
+
+      new QRCode(qrcode, {
+        text: value,
+        width: 128,
+        height: 128
+      });
 
       records.forEach((item) => {
         labelList.innerHTML += `<div class="page"><span class="date">${item.date}</span><br><span class="sample">${item.sampleId}</span><div class="split"><span class="lab">${item.lab}</span><span class="weight">${item.weight}g</span></div></div>`
